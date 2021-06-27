@@ -1,21 +1,20 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
 	"github.com/xiaoming857/chatroom/config"
+	"github.com/xiaoming857/chatroom/route"
 )
 
 func main() {
 	port := config.GetPort()
 
 	r := mux.NewRouter()
-	r.HandleFunc(`/`, func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, `Hello World!`)
-	})
+	route.Setup(r)
+
 	log.Println(`Serve starting at localhost:` + port)
 	log.Fatalln(http.ListenAndServe(`:`+port, r))
 }
