@@ -7,9 +7,10 @@ import (
 
 	"github.com/gorilla/websocket"
 	"github.com/joho/godotenv"
-	"github.com/xiaoming857/chatroom/model"
+	"github.com/xiaoming857/chatroom/api/model"
 )
 
+// Global variables
 var (
 	Clients     = make(map[*websocket.Conn]bool)
 	Broadcaster = make(chan model.ChatMessage)
@@ -20,6 +21,7 @@ var (
 	}
 )
 
+// GetPort
 func GetPort() string {
 	if err := godotenv.Load(); err != nil {
 		log.Fatalln(`Error loading .env file`)

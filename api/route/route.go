@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/xiaoming857/chatroom/handler"
+	"github.com/xiaoming857/chatroom/api/handler"
 )
 
 // Setup
@@ -14,5 +14,5 @@ func Setup(r *mux.Router) {
 		fmt.Fprintf(w, `Hello World!`)
 	})
 	r.HandleFunc(`/ws`, handler.HandleConnections)
-	go handler.HandleMessages() // Listening for incoming messages
+	go handler.HandleMessages() // Listening to incoming messages
 }

@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/xiaoming857/chatroom/config"
-	"github.com/xiaoming857/chatroom/route"
+	"github.com/xiaoming857/chatroom/api/config"
+	"github.com/xiaoming857/chatroom/api/route"
 )
 
 func main() {
