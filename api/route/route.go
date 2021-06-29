@@ -1,18 +1,14 @@
 package route
 
 import (
-	"fmt"
-	"net/http"
-
 	"github.com/gorilla/mux"
 	"github.com/xiaoming857/chatroom/api/handler"
 )
 
 // Setup
+// Setup route
 func Setup(r *mux.Router) {
-	r.HandleFunc(`/`, func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, `Hello World!`)
-	})
-	r.HandleFunc(`/ws`, handler.HandleConnections)
-	go handler.HandleMessages() // Listening to incoming messages
+	r.HandleFunc(`/`, handler.Home)                // Home
+	r.HandleFunc(`/ws`, handler.HandleConnections) // Handle WebSocket
+	go handler.HandleMessages()                    // Listening to incoming messages
 }

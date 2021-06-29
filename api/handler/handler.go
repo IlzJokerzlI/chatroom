@@ -12,7 +12,7 @@ import (
 // HTTP route handler runs similarly to goroutines. This allows the handler to handle multiple requests
 // independently from each other.
 func HandleConnections(w http.ResponseWriter, r *http.Request) {
-	// Upgrade HTTP request to websocket protocol
+	// Upgrade HTTP request to WebSocket protocol
 	if ws, err := config.Upgrader.Upgrade(w, r, nil); err != nil {
 		log.Fatalln(err)
 	} else {
@@ -22,10 +22,12 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 
 		// Loop and wait for messages from a client
 		for {
-			var msg model.ChatMessage
+			var msg model.ChatMessage // Temporary holder for ChatMessage
 
 			// Wait for incoming message and read JSON into ChatMessage struct
 			if err := ws.ReadJSON(&msg); err != nil {
+				// If ws.ReadJSON returns an error, the object in the map
+				// will be removed.
 				log.Println(`Failed to read message: ` + err.Error())
 				delete(config.Clients, ws)
 				break
@@ -45,6 +47,8 @@ func HandleMessages() {
 		// Broadcast messages to all clients
 		for client := range config.Clients {
 			if err := client.WriteJSON(msg); err != nil {
+				// If client.WriteJSON returns an error, the connection with the client
+				// will be closed and the object in the map will be removed.
 				log.Println(`Error: ` + err.Error())
 				client.Close()
 				delete(config.Clients, client)

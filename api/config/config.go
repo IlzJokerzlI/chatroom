@@ -12,9 +12,9 @@ import (
 
 // Global variables
 var (
-	Clients     = make(map[*websocket.Conn]bool)
-	Broadcaster = make(chan model.ChatMessage)
-	Upgrader    = websocket.Upgrader{
+	Clients     = make(map[*websocket.Conn]bool) // Map of clients (uses maps to directly map the key object)
+	Broadcaster = make(chan model.ChatMessage)   // A channel between HandleConnections and HandleMessages
+	Upgrader    = websocket.Upgrader{            // Upgrade HTTP request to WebSocket protocol
 		CheckOrigin:     func(r *http.Request) bool { return true },
 		ReadBufferSize:  1024,
 		WriteBufferSize: 1024,
@@ -22,6 +22,7 @@ var (
 )
 
 // GetPort
+// Load environment variables (PORT)
 func GetPort() string {
 	if err := godotenv.Load(); err != nil {
 		log.Fatalln(`Error loading .env file`)

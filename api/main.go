@@ -10,11 +10,11 @@ import (
 )
 
 func main() {
-	port := config.GetPort()
+	port := config.GetPort() // Get port from environment
 
-	r := mux.NewRouter()
-	route.Setup(r)
+	r := mux.NewRouter() // Use Mux framework
+	route.Setup(r)       // Setup route
 
-	log.Println(`Serve starting at localhost:` + port)
+	log.Println(`Serve starting at localhost:` + port) // Serve
 	log.Fatalln(http.ListenAndServe(`:`+port, r))
 }
